@@ -1,0 +1,165 @@
+Python programs can be decomposed into modules, statements, expressions and objects:
+    1) Programs are composed of models
+    2) Modules contain statements
+    3) Statements contain expressions  
+    4) Expressions create and process objects
+Objects: pieces of memory, with values and sets of associated operations
+    - Python has built-in objects
+Numbers:
+    - includes integers (numbers without fractions), floating-point numbers (roughly, numbers with a decimal point), and more exotic numeric types (complex numbers with imaginary parts, fixed-precision decimals, rational fractions with numerator and denominator, and full-featured sets)
+    * = multiplication
+    ** = exponentiation
+    - math module contains more advanced numeric tools as functions
+        >>> import math
+        >>> math.pi
+        3.1415926535897931
+        >>> math.sqrt(85)
+        9.2195444572928871
+    - random module performs random number generation and random selections
+        >>> import random
+        >>> random.random()
+        0.59268735266273953
+        >>> random.choice([1, 2, 3, 4])
+        1
+Strings: used to record textual information and arbitrary collections of bytes, 
+    - sequences of one-character strings (words)
+    - indexing expressions for a 4 character string:
+        >>> S = 'Spam'
+        >>> len(S) # Length
+        4
+        >>> S[0] # The first item in S, indexing by zero-based position
+        'S'
+        >>> S[1] # The second item from the left
+        'p'
+    - slicing:
+        >>> S # A 4-character string
+        'Spam'
+        >>> S[1:3] # Slice of S from offsets 1 through 2 (not 3)
+        'pa'
+    - find ()  # allows you to find the offset of a substring
+Lists: Most general sequence
+    - same rules as strings, we can index, slic, etc.
+        >>> L[0] # Indexing by position
+        123
+        >>> L[:-1] # Slicing a list returns a new list
+        [123, 'spam']
+        >>> L + [4, 5, 6] # Concatenation makes a new list too
+        [123, 'spam', 1.23, 4, 5, 6]
+    - List specific operations: to grow/shrink the list
+        >>> L.append('NI') # Growing: add object at end of list
+        >>> L
+        [123, 'spam', 1.23, 'NI']
+        >>> L.pop(2) # Shrinking: delete an item in the middle
+        1.23
+        >>> L # "del L[2]" deletes from a list too
+        [123, 'spam', 'NI']  
+    - List comprehension:
+        >>> squares = [x ** 2 for x in [1, 2, 3, 4, 5]]
+        >>> squares
+        [1, 4, 9, 16, 25]
+Dictionaries: store by key instead of relative position USE CURLY BRACKETS   
+    - useful anytime we need to associate a set of values with keys (characteristics)
+    - take this dictionary for food (keys of "food," "quantity" and "color")
+        D = {'food': 'Spam', 'quantity': 4, 'color': 'pink'}
+    - We can fetch:
+        >>> D['food']
+        'Spam' 
+    - We can add to quantity value: 
+        >>> D['quantity'] += 1
+        >>> D
+        {'food': 'Spam', 'color': 'pink', 'quantity': 5}
+    - We can create assignments
+        >>> D = {}
+        >>> D['name'] = 'Bob' # Create keys by assignment
+        >>> D['job'] = 'dev'
+        >>> D['age'] = 40
+        >>> D
+        {'age': 40, 'job': 'dev', 'name': 'Bob'}
+        >>> print(D['name'])
+        Bob
+    - Nesting in dictionary:
+        >>> rec['name'] # 'name' is a nested dictionary
+        {'last': 'Smith', 'first': 'Bob'}
+        >>> rec['name']['last'] # Index the nested dictionary
+        'Smith'
+        >>> rec['job'] # 'job' is a nested list
+        ['dev', 'mgr']
+        >>> rec['job'][-1] # Index the nested list
+        'mgr'
+        >>> rec['job'].append('janitor') # Expand Bob's job description in-place
+        >>> rec
+        {'age': 40.5, 'job': ['dev', 'mgr', 'janitor'], 'name': {'last': 'Smith',
+        'first': 'Bob'}}
+    - Sorting Dictionaries: The 'for' loop
+        - define your dictionary
+        - key = all the words in a dictionary, syntax: key()
+        - values = all the definitions in a dictionary, syntax: values()
+            >>> D
+            {'a': 1, 'c': 3, 'b': 2}
+            >>> for key in sorted(D):
+                print(key, '=>', D[key])
+            a => 1
+            b => 2
+            c => 3
+    - The 'for' loop is the main way to code repetitive tasks on scripts
+        >>> for c in 'spam':
+            print(c.upper())
+        S
+        P
+        A
+        M
+Tuple: sequences that cannot be changed, coded in ()
+    - support mixed types and nesting, but cannot grow/shrink b/c immutable
+        >>> T = (1, 2, 3, 4) # A 4-item tuple
+        >>> len(T) # Length
+        4
+        >> T + (5, 6) # Concatenation
+        (1, 2, 3, 4, 5, 6)
+        >>> T[0] # Indexing, slicing, and more
+        1
+        >>> T.index(4) # Tuple methods: 4 appears at offset 3
+        3
+        >>> T.count(4) # 4 appears once
+        1  
+File: main interface to external files on your computer
+    - You call the built-in 'open' function, passing in an external filename and a processing mode as strings
+    - In this example of text ouput file: pass in name (data.txt) and processing mode ('w' for write data)
+        >>> f = open('data.txt', 'w') # Make a new file in output mode
+        >>> f.write('Hello\n') # Write strings of bytes to it
+        6
+        >>> f.write('world\n') # Returns number of bytes written in Python 3.0
+        6
+        >>> f.close() # Close to flush output buffers to disk
+    - Then, you can read, print or split your file:
+        >>> f = open('data.txt') # 'r' is the default processing mode
+        >>> text = f.read() # Read entire file into a string
+        >>> text
+        'Hello\nworld\n'
+        >>> print(text) # print interprets control characters
+        Hello
+        world
+        >>> text.split() # File content is always a string
+        ['Hello', 'world']
+Object-Oriented Programming: Create classes to define new types of objects
+    - For example, if you want a type of object that models employees: Use def __init__
+        - def = defining a function
+        - __init__ = initializes the attributes of a class
+            >>> class Worker:
+                def __init__(self, name, pay): # Initialize when created
+                    self.name = name # self is the new object
+                    self.pay = pay
+                def lastName(self):
+                    return self.name.split()[-1] # Split string on blanks
+                def giveRaise(self, percent):
+                    self.pay *= (1.0 + percent) # Update pay in-place
+    - This defined a new kind of object that has name and pay attributes and 2 bits of behavior coded as functions (normally called methods)
+    - You can then make instances and call the methods
+            >>> bob = Worker('Bob Smith', 50000) # Make two instances
+            >>> sue = Worker('Sue Jones', 60000) # Each has name and pay attrs
+            >>> bob.lastName() # Call method: bob is self
+            'Smith'
+            >>> sue.lastName() # sue is the self subject
+            'Jones'
+            >>> sue.giveRaise(.10) # Updates sue's pay
+            >>> sue.pay
+            66000.0 
